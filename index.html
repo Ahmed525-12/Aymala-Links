@@ -232,6 +232,113 @@
                 font-size: 1rem;
             }
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark-black) 0%, var(--primary-black) 100%);
+            margin: 10% auto;
+            padding: 30px;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .contact-section {
+            margin-bottom: 20px;
+        }
+
+        .contact-label {
+            color: var(--light-gold);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            color: var(--light-gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: var(--light-gold);
+        }
+
+        .contact-icon {
+            margin-right: 12px;
+            color: var(--gold);
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            background: var(--gold);
+            color: var(--primary-black);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--light-gold);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -255,6 +362,41 @@
      
     </div>
 
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Contact Us</h3>
+            </div>
+            
+            <div class="contact-section">
+                <div class="contact-label">Email Addresses</div>
+                <a href="mailto:marketing@aymalabeauty.com" class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    marketing@aymalabeauty.com
+                </a>
+                <a href="mailto:commercial@aymalabeauty.com" class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    commercial@aymalabeauty.com
+                </a>
+            </div>
+            
+            <div class="contact-section">
+                <div class="contact-label">Phone Numbers</div>
+                <a href="tel:+966565127768" class="contact-item">
+                    <i class="fas fa-phone contact-icon"></i>
+                    0565127768
+                </a>
+                <a href="tel:+966562199887" class="contact-item">
+                    <i class="fas fa-phone contact-icon"></i>
+                    0562199887
+                </a>
+            </div>
+            
+            <button class="close-btn" onclick="closeContactModal()">Close</button>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         // Configuration object for easy customization
@@ -267,7 +409,7 @@
                 {
                     name: "Our Official Website",
                     icon: "ucE9LqfauGwsXoKXQw8Cz5LaemhovgHxBy8hMz6W.jpg",
-                    url: "https://salla.sa/aymalabeauty/"
+                    url: "https://aymalabeauty.com/"
                 },
                 {
                     name: "Instagram",
@@ -283,6 +425,12 @@
                     name: "Trendyol Store",
                     icon: "trendyol.jpg",
                     url: "https://www.trendyol.com/ar/magaza/aymala-beauty-m-1242447?sst=0&adjust_t=mk12x3o_m4o2h83&adjust_tracker_limit=999999999&adjust_campaign=ios_sellerstore_free_2026311_SA&link_userID=179815986&adjust_adgroup=179815986&link_sellerid=1242447&adjust_creative=1242447"
+                },
+                {
+                    name: "Contact Us",
+                    icon: "ucE9LqfauGwsXoKXQw8Cz5LaemhovgHxBy8hMz6W.jpg",
+                    url: "#contact",
+                    action: "openContact"
                 },
             ],
             
@@ -311,6 +459,12 @@
                 // Add click tracking (optional)
                 linkElement.addEventListener('click', function(e) {
                     console.log(`Clicked: ${link.name}`);
+                    
+                    // Handle special actions
+                    if (link.action === 'openContact') {
+                        e.preventDefault();
+                        openContactModal();
+                    }
                     // You can add analytics tracking here
                 });
                 
@@ -385,8 +539,28 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.activeElement.blur();
+                closeContactModal();
             }
         });
+
+        // Contact Modal Functions
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                closeContactModal();
+            }
+        }
     </script>
 </body>
 </html>
