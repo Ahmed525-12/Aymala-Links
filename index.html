@@ -407,6 +407,11 @@
             // Main links array - easily customizable
             links: [
                 {
+                    name: "Our Official Website",
+                    icon: "ucE9LqfauGwsXoKXQw8Cz5LaemhovgHxBy8hMz6W.jpg",
+                    url: "https://aymalabeauty.com/"
+                },
+                {
                     name: "Instagram",
                     icon: "ig.jpg",
                     url: "https://www.instagram.com/aymalabeauty/"
@@ -417,16 +422,15 @@
                     url: "https://www.tiktok.com/@aymalabeauty"
                 },
                 {
+                    name: "Trendyol Store",
+                    icon: "trendyol.jpg",
+                    url: "https://www.trendyol.com/ar/magaza/aymala-beauty-m-1242447?sst=0&adjust_t=mk12x3o_m4o2h83&adjust_tracker_limit=999999999&adjust_campaign=ios_sellerstore_free_2026311_SA&link_userID=179815986&adjust_adgroup=179815986&link_sellerid=1242447&adjust_creative=1242447"
+                },
+                {
                     name: "Contact Us",
                     icon: "ucE9LqfauGwsXoKXQw8Cz5LaemhovgHxBy8hMz6W.jpg",
                     url: "#contact",
                     action: "openContact"
-                },
-                {
-                    name: "Lens Colors Catalog",
-                    icon: "ucE9LqfauGwsXoKXQw8Cz5LaemhovgHxBy8hMz6W.jpg",
-                    url: "#lens-colors",
-                    action: "openPDF"
                 },
             ],
             
@@ -460,9 +464,6 @@
                     if (link.action === 'openContact') {
                         e.preventDefault();
                         openContactModal();
-                    } else if (link.action === 'openPDF') {
-                        e.preventDefault();
-                        openPDFViewer();
                     }
                     // You can add analytics tracking here
                 });
@@ -559,12 +560,6 @@
             if (event.target === modal) {
                 closeContactModal();
             }
-        }
-
-        // PDF Viewer Function
-        function openPDFViewer() {
-            // Open the PDF in a new tab
-            window.open('داخلى جديد.pdf', '_blank');
         }
     </script>
 </body>
